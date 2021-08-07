@@ -2,11 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Comment from './Comment';
 import reportWebVitals from './reportWebVitals';
+
+const myAuthorInfo =  {
+    userInfo : {
+      userName : "Jacob",
+      avatarUrl : "http://www.w3.org/2000/svg"
+    }
+};
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <Comment authorInfo={myAuthorInfo} commentText={"this is the footer"} commentDate={new Date()}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
