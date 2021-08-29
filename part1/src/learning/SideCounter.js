@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react'
 
 const History = (props) => {
     if (props.allClicks.length === 0) {
@@ -38,18 +38,17 @@ const SideCounter = () => {
         setClicks(newClicks)
     }
 
-    const render = () => {
-        return (
+
+    return (
             <div>
                 {clicks.left}
-                <button onClick={this.handleLeftClick}>left</button>
-                <button onClick={this.handleRightClick}>right</button>
+                <button onClick={handleLeftClick}>left</button>
+                <button onClick={handleRightClick}>right</button>
                 {clicks.right}
                 <History allClicks={allClicks} />
             </div>
         )
     }
-}
 
 
 // functionals: functions returning functions

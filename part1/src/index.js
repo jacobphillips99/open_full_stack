@@ -16,11 +16,12 @@ import './index.css';
 // import EventHandlerPractice from './EventHandlerPractice'
  
 // work
-import Feedback from './work/Feedback'
+// import Feedback from './work/Feedback'
+import RandomQuote from './work/RandomQuote'
 
 ReactDOM.render(
   <React.StrictMode>
-  <Feedback></Feedback>
+  <RandomQuote></RandomQuote>
   </React.StrictMode>,
   document.getElementById('root')
 );
