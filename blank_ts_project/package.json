@@ -1,7 +1,7 @@
 {
-  "name": "part2",
+  "name": "blank project",
   "version": "1.0.0",
-  "description": "part 2 of open full stack but in typescript",
+  "description": "blank proj",
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist && tsc",
