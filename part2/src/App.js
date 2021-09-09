@@ -1,5 +1,14 @@
 import React, { useState } from 'react'
 
+const Person = (props) => {
+    return <li key={props.name}>{props.name}: {props.number}</li>
+}
+
+const SearchablePhonebook = (props) => {
+    const peopleToShow = props.people.filter(p => p.name.toLowerCase().startsWith(props.searchprefix))
+    return (<ul>{peopleToShow.map((p, ind) => <Person key={ind} name={p.name} number={p.number}/>)}</ul>)
+}
+
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -44,15 +53,15 @@ const App = () => {
       setSearchPrefix(event.target.value.toLowerCase())
   }
 
-  const peopleToShow = persons.filter(p => p.name.toLowerCase().startsWith(searchPrefix))
-
   return (
     <div>
       <h1>Phonebook!</h1>
       <form>
           filter for names beginning with <input value={searchPrefix} onChange={handleSearchPrefixChange}/>
       </form>
-      <ul>{peopleToShow.map((p, ind) => <li key={ind}>{p.name}: {p.number}</li>)}</ul>
+      <div>
+          <SearchablePhonebook people={persons} searchprefix={searchPrefix} />
+      </div>
       <h3>Add a new name and number!</h3>
       <form onSubmit={addPerson}>
           <div>name:   <input value={newName} onChange={handleNameChange}/></div>
