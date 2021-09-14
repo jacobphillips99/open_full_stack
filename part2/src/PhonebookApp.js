@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
-const Person = (props) => {
-    return <li key={props.name}>{props.name}: {props.number}</li>
-}
+import Person from './components/Person'
+import phonebookServices from './services/phonebookServices'
 
 const SearchablePhonebook = (props) => {
     const peopleToShow = props.people.filter(p => p.name.toLowerCase().startsWith(props.searchprefix))
@@ -29,7 +27,11 @@ const App = () => {
     }
 
     if (!persons.some(p => p.name === newName && p.number === newNumber)) {
-        setPersons(persons.concat(newPerson))
+      phonebookServices
+      .create(newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+      })
     } else {
         alert(`${newName} is already in the phonebook!`)
     }
@@ -49,19 +51,11 @@ const App = () => {
       setSearchPrefix(event.target.value.toLowerCase())
   }
 
-  const hook = () => {
-    console.log('effect called')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
-  }
-  
-  useEffect(hook, [])
-  console.log('render', persons.length, 'people')
-
+  useEffect(() => {
+    phonebookServices.getAll().then(initialPersons => {
+      setPersons(initialPersons)
+    })
+  })
   return (
     <div>
       <h1>Phonebook!</h1>

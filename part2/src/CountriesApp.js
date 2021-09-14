@@ -15,7 +15,6 @@ const Country = ({country}) => {
             <div><img src={country.flag} alt={country.name + ' flag'} /></div>
         </div>
     )
-    // return <ul>{Object.entries(country).map((i, [k,v]) => <li key={i}>{k}: {v}</li>)})</ul>
 }
 
 const SearchableCountries = (props) => {
