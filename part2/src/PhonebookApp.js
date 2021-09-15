@@ -23,14 +23,17 @@ const App = () => {
 
 
   const deleteCallback = (id) => {
-    console.log("hit delete on button: ", id)
-    const keptPeople = persons.filter(p => p.id !== id)
-    phonebookServices
-      .deleteID(id)
-      .then(() => {
-        setPersons(keptPeople)
-        console.log("kept: ", keptPeople)
-      })
+    const deletedPerson = persons.filter(p => p.id === id)[0]
+    const res = window.confirm(`Are you sure you want to delete ${deletedPerson.name}?`)
+    if (res) {
+      const keptPeople = persons.filter(p => p.id !== id)
+      phonebookServices
+        .deleteID(id)
+        .then(() => {
+          setPersons(keptPeople)
+          console.log("kept: ", keptPeople)
+        })
+      }
   }
 
 
@@ -41,6 +44,22 @@ const App = () => {
         setNewNumber('')
         return
     }
+    const numbers = /^[0-9]+$/
+    if (!newNumber.match(numbers)) {
+      window.alert("Number must consist of only numbers!")
+      setNewNumber('')
+      return
+    }
+
+    const letters = /^[A-Za-z ]+$/
+    if(!newName.match(letters)) { 
+      window.alert("Name must consist of only letters!")
+      setNewName('')
+      return
+    }
+
+
+
     const newPerson = {
         name: newName,
         number: newNumber
