@@ -20,6 +20,12 @@ const update = (id, newObject) => {
         .then(response => response.data)
 }
 
-const services = { getAll, create, update }
+const deleteID = (id) => {
+    return axios
+        .delete(baseURL + '/' + id)
+        // .then(response => response.data)
+}
+
+const services = { getAll, create, update, deleteID }
 
 export default services

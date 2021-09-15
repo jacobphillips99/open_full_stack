@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Person from './components/Person'
 import phonebookServices from './services/phonebookServices'
 
+const PhonebookEntry = (props) => {
+  return (<div>
+            <Person name={props.name} number={props.number}/>
+            <button onClick={() => props.callback(props.id)}>delete me!</button>
+          </div>)
+}
+
 const SearchablePhonebook = (props) => {
-    const peopleToShow = props.people.filter(p => p.name.toLowerCase().startsWith(props.searchprefix))
-    return (<ul>{peopleToShow.map((p, ind) => <Person key={ind} name={p.name} number={p.number}/>)}</ul>)
+    console.log("people: ", props.people)
+    const peopleToShow = Object.values(props.people).filter(p => p.name.toLowerCase().startsWith(props.searchprefix))
+    return (<ul>{peopleToShow.map((p, ind) => {return <PhonebookEntry key={p.id} id={p.id} name={p.name} number={p.number} callback={props.deletecallback}/>})}</ul>)
 }
 
 const App = () => {
@@ -13,6 +20,19 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ searchPrefix, setSearchPrefix ] = useState('')
+
+
+  const deleteCallback = (id) => {
+    console.log("hit delete on button: ", id)
+    const keptPeople = persons.filter(p => p.id !== id)
+    phonebookServices
+      .deleteID(id)
+      .then(() => {
+        setPersons(keptPeople)
+        console.log("kept: ", keptPeople)
+      })
+  }
+
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -55,7 +75,7 @@ const App = () => {
     phonebookServices.getAll().then(initialPersons => {
       setPersons(initialPersons)
     })
-  })
+  }, [])
   return (
     <div>
       <h1>Phonebook!</h1>
@@ -63,7 +83,7 @@ const App = () => {
           filter for names beginning with <input value={searchPrefix} onChange={handleSearchPrefixChange}/>
       </form>
       <div>
-          <SearchablePhonebook people={persons} searchprefix={searchPrefix} />
+          <SearchablePhonebook people={persons} searchprefix={searchPrefix} deletecallback={deleteCallback}/>
       </div>
       <h3>Add a new name and number!</h3>
       <form onSubmit={addPerson}>
