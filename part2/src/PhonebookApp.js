@@ -58,21 +58,33 @@ const App = () => {
       return
     }
 
-
-
     const newPerson = {
         name: newName,
         number: newNumber
     }
+    // noteService
+    // .update(id, changedNote)
+    // .then(returnedNote => {
+    //   setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+    // })
 
-    if (!persons.some(p => p.name === newName && p.number === newNumber)) {
+    if (!persons.some(p => p.name === newName)) {
       phonebookServices
       .create(newPerson)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
       })
-    } else {
-        alert(`${newName} is already in the phonebook!`)
+    } else if (persons.some(p => p.name === newName)) {
+        const existingIndex = persons.findIndex(p => p.name === newName)
+        const existingPerson = persons[existingIndex]
+        const res = window.confirm(`Replace ${newName}'s number with ${newNumber}?`)
+        if (res) {
+          phonebookServices
+            .update(existingPerson.id, newPerson)
+            .then(returnedPerson => {
+              setPersons(persons.map(p => p.id !== existingPerson.id? p: returnedPerson))
+            })
+        }
     }
     setNewName('')
     setNewNumber('')
