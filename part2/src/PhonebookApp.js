@@ -21,7 +21,6 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ searchPrefix, setSearchPrefix ] = useState('')
 
-
   const deleteCallback = (id) => {
     const deletedPerson = persons.filter(p => p.id === id)[0]
     const res = window.confirm(`Are you sure you want to delete ${deletedPerson.name}?`)

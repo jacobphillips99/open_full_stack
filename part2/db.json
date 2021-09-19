@@ -45,16 +45,6 @@
   ],
   "persons": [
     {
-      "name": "abcdefg",
-      "number": "345234234234",
-      "id": 3
-    },
-    {
-      "name": "asdfasdf asdasdf",
-      "number": "123123",
-      "id": 4
-    },
-    {
       "name": "asdfasdf",
       "number": "12341234",
       "id": 5
